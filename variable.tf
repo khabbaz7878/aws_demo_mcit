@@ -1,7 +1,7 @@
-variable "AWS_ACCESS_KEY"{
+variable "access_key"{
   
 }
-variable "AWS_SECRET_ACCESS_KEY"{
+variable "secret_access_key"{
   
 }
 variable "aws_region" {
