@@ -8,6 +8,4 @@ resource "aws_spot_instance_request" "cheap_worker" {
     Name = "CheapWorker"
   }
 }
-resource "aws_spot_instance_request" "public" {
-  ami                  = "ami-0b3e57ee3b63dd76b" # amazon linux 
-}
+
