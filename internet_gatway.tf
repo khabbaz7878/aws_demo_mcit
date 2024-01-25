@@ -1,5 +1,5 @@
 resource "aws_internet_gateway" "main" {
-  vpc_id = module.aws_vpc.vpc_id
+  vpc_id = module.vpc.vpc_id
 
   tags = {
     Name = "main"
@@ -7,7 +7,7 @@ resource "aws_internet_gateway" "main" {
 }
 
 resource "aws_route_table" "public" {
-  vpc_id = module.aws_vpc.vpc_id
+  vpc_id = module.vpc.vpc_id
 
   route {
     cidr_block = "0.0.0.0/0"
