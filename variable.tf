@@ -15,3 +15,16 @@ variable "instance_type"{
     type =string
     default="t3.micro"
 }
+variable "vpc_cidr_block" {
+  description = "CIDR block for the VPC"
+}
+
+variable "public_subnets" {
+  type        = list(string)
+  description = "CIDR blocks for public subnets"
+}
+
+variable "private_subnets" {
+  type        = list(string)
+  description = "CIDR blocks for private subnets"
+}
