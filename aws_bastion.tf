@@ -1,49 +1,21 @@
-# Create Elastic IP
-resource "aws_eip" "bastion_eip" {
+resource "aws_eip" "bastion" {
   vpc = true
-  
-  tags = {
-    Name = "bastion-eip"
-  }
 }
 
-# Create EC2 instance for bastion host
 resource "aws_instance" "bastion" {
-  ami           = "ami-0abcdef1234567" # AMI for bastion 
-  instance_type = "t2.micro"
-  
-  subnet_id              = aws_subnet.public_a.id
-  vpc_security_group_ids = [aws_security_group.bastion_sg.id]
+  # ... other instance configuration ...
 
-  tags = {
-    Name = "bastion"
-  }
+  # Associate the EIP with the bastion host
+  associate_public_ip_address = true
+  # If you want to specify the EIP explicitly, use the following line instead:
+  # public_ip = aws_eip.bastion.id
 }
 
-# Associate EIP with bastion instance
-resource "aws_eip_association" "bastion_eip_assoc" {
-  instance_id   = aws_instance.bastion.id
-  allocation_id = aws_eip.bastion_eip.id
-}
-
-# Security group for bastion host
-resource "aws_security_group" "bastion_sg" {
-  name        = "bastion_sg"
-  description = "Allow inbound SSH traffic"
- 
-
-  ingress {
-    description = "Allow SSH"
-    from_port   = 22
-    to_port     = 22
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"] 
-  }
-
-  egress {
-    from_port   = 0
-    to_port     = 0 
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
+# Optionally, you can also create a Route53 DNS record for the bastion host
+resource "aws_route53_record" "bastion" {
+  zone_id = aws_route53_zone.example.zone_id
+  name    = "bastion.example.com"
+  type    = "A"
+  ttl     = "3600"
+  records = [aws_eip.bastion.public_ip]
 }
