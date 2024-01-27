@@ -30,7 +30,7 @@ resource "aws_eip_association" "bastion_eip_assoc" {
 resource "aws_security_group" "bastion_sg" {
   name        = "bastion_sg"
   description = "Allow inbound SSH traffic"
-  vpc_id      = aws_vpc.main.id
+  vpc_id      = vpc.main.id
 
   ingress {
     description = "Allow SSH"
